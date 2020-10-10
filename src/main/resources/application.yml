@@ -1,0 +1,36 @@
+server:
+  port: 80
+spring:
+  application:
+    name: springcloudzuul
+  thymeleaf:
+    cache: false
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 0
+    jedis:
+      pool:
+        max-active: 8
+        max-wait:
+        max-idle: 8
+        min-idle: 0
+    timeout:
+    password:
+eureka:
+  client:
+    service-url:
+      defaultZone: http://user:123456@localhost:8761/eureka
+zuul:
+  routes:
+    user:
+      path: /user/**
+      serviceId: springclouduser
+      sensitiveHeaders: Authorization
+      stripPrefix: false
+    article:
+      path: /article/**
+      serviceId: springcloudarticle
+      sensitiveHeaders: Authorization
+      stripPrefix: false
+  add-host-header: true #防止了跳转到上游服务
